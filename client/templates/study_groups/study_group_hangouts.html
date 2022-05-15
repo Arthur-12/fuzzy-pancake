@@ -1,0 +1,64 @@
+<template name="studyGroupHangouts">
+  <div id="hangout-board">
+    <div class="hangout-board">
+
+      {{#if isInRole 'owner, admin, moderator' _id}}
+        <div class="col-md-3 col-md-offset-9 margin-bottom-1">
+          <div class="btn btn-cb2 btn-schedule-hangout {{#unless currentUser}} continue-popup {{/unless}}" id="{{#if currentUser}}newHangout{{/if}}"  >{{_ "create_a_hangout"}}</div>
+        </div>
+      {{else}}
+        {{#if equals exempt_from_default_permission true}}
+            {{#if isInRole 'owner, admin, moderator, member' _id}}
+                <div class="col-md-3 col-md-offset-9 margin-bottom-1">
+                    <div class="btn btn-cb2 btn-schedule-hangout {{#unless currentUser}} continue-popup {{/unless}}" id="{{#if currentUser}}newHangout{{/if}}"  >{{_ "create_a_hangout"}}</div>
+                </div>
+            {{/if}}
+        {{else}}
+          <div class="col-md-12 well">
+            <p>If you'd like to schedule a hangout for this study group, <strong>please ask an organizer</strong> to make you an organizer or change the permission settings of the group.</p>
+          </div>
+        {{/if}}
+      {{/if}}
+
+
+
+        {{#if Template.subscriptionsReady}}
+          <div>
+              {{#if hangoutCount}}
+                {{#if liveHangoutCount}}
+                <h3 class="col-lg-12">{{_ "upcoming_events"}}</h3>
+                {{/if}}
+                {{#each hangouts}}
+                  {{#unless isHangoutCompleted end }}
+                   <div class="col-md-6">
+                      {{> hangoutCard}}
+                   </div>
+                  {{/unless}}
+                 {{/each}}
+
+                {{#if pastHangoutCount}}
+                <h3 class="col-lg-12">{{_ "past_events"}}</h3>
+                {{/if}}
+                {{#each hangouts}}
+                  {{#if isHangoutCompleted end }}
+                   <div class="col-md-6">
+                      {{> hangoutCard}}
+                   </div>
+                   {{/if}}
+                {{/each}}
+              {{else}}
+                  <h5 class="text-center well margin-top-1">No hangouts yet. Want to start one?</h5>
+              {{/if}}
+          </div>
+
+          {{#if status}}
+            <h5 class="text-center well">You've reached the end of the page.</h5>
+          {{/if}}
+
+        {{else}}
+            {{> loading}}
+        {{/if}}
+    </div>
+
+  </div><!--hangout-board-->
+</template>

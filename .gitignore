@@ -1,0 +1,16 @@
+settings-production.json
+settings-staging.json
+push.sh
+node_modules
+settings-keys.json
+.DS_Store
+fullchain.pem
+mup.json
+privkey.pem
+settings.json
+npm-debug.log
+my-settings.json
+package.tar.gz
+.clipboard
+.vscode
+.idea
